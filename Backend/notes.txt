@@ -1,0 +1,35 @@
+nest new nest_api
+nest g module user
+nest g service user
+nest g service prisma --no-spec
+
+docker system prune -a
+docker images -a
+docker volume ls
+docker image prune
+
+npm install prisma --save-dev
+npm install --save @prisma/client
+npx prisma init
+npx prisma migrate dev // generating sql tables
+npx prisma migrate deploy // migrate existing sql tables to our db
+npx prisma generate // create typescript types (interfaces or classes) for ur prisma schema
+npx prisma studio
+
+npm i cookie-parser
+npm i -D @types/cookie-parser
+
+npm install --save @nestjs/passport passport passport-local
+npm install --save-dev @types/passport-local
+npm install passport-42
+npm install @nestjs/config // for using .env command
+npm install --save @nestjs/jwt passport-jwt
+npm install --save-dev @types/passport-jwt
+
+docker compose up pg_db -d
+docker compose rm pg_db -s -f -v 
+
+npm i --save class-validator class-transformer
+
+
+npm install otplib //2fa

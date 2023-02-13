@@ -1,0 +1,25 @@
+*, ::after, ::before {
+  margin: 0;
+  padding: 0;
+}
+
+.react-p5 {
+  border: solid 1px black;
+  width: fit-content;
+}
+
+.canvas-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.component1 {
+  position: absolute;
+  height: 100vh;
+  top:0%;  /* positions the top edge of the component 10px below its normal position */
+  left: 25%; /* positions the left edge of the component 20px to the right of its normal position */
+}

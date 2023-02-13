@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["filteredRelationCount"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @unique
+  full_name String
+  username String //unique
+  avatar String
+  avatar_key String?
+  is_two_fa_enable Boolean
+  two_fa_code String?
+  email String
+  status UserStatus
+  win Int
+  lose Int
+  score Int
+  win_streak Int
+
+  achievements Achievement[]
+  
+  blocked User[] @relation("blocked")
+  blockedRelation User[] @relation("blocked")
+
+  chats RoomUser[]
+  player1 Game[] @relation("player1")
+  player2 Game[] @relation("player2")
+  friends User[] @relation("friends")
+  friendsRelation User[] @relation("friends")
+}
+
+model Room{
+  id Int @id @default(autoincrement())
+  name String
+  type ACCESS
+  password String?
+
+  users RoomUser[]
+}
+
+model RoomUser{
+  Room_id Int
+  chat Room @relation(fields: [Room_id], references: [id])
+  user_id String
+  user User @relation(fields: [user_id], references: [id])
+  role Role
+
+  mute_time DateTime
+  is_banned Boolean
+
+  @@id([Room_id, user_id])
+}
+
+model MessageUser{
+  Message_id Int @id @default(autoincrement())
+  room_id Int
+
+  user_id String
+
+  avatar String
+
+  username String
+
+  content String
+  time DateTime @default(now())
+}
+
+model Game{
+  id Int @id @default(autoincrement())
+  user1_id String
+  user1 User  @relation("player1",fields: [user1_id], references: [id])
+  user2_id String
+  user2 User @relation("player2",fields: [user2_id], references: [id])
+  user1_score Int
+  user2_score Int
+  time DateTime @default(now())
+  mode ModeGame
+  status StatusGame
+}
+
+enum Role{
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum ACCESS{
+  PUBLIC
+  PRIVATE
+  PROTECTED
+  DM
+}
+
+enum UserStatus{
+  ON
+  OFF
+  INGAME
+  INQUEUE
+}
+
+enum ModeGame{
+  MODE1
+  MODE2
+  MODE3
+}
+
+enum Achievement{
+  GREAT_WIRATE
+  LEGEND_WIRATE
+  DECENT_WIRATE
+  GREAT_LOSER
+  FIVE_WIN_STREAK
+  TEN_WIN_STREAK
+  GREAT_AVATAR
+  COMMUNICATOR
+}
+
+enum MuteTime{
+  ONE_MINUTE
+  FIVE_MINUTE
+  TEN_MINUTE
+  ONE_HOUR
+  ONE_DAY
+}
+
+enum StatusGame{
+  PLAYING
+  FINISHED
+}

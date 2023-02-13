@@ -1,0 +1,575 @@
+$NAV-dark: #000000;
+$dark-dark: #111214;
+$normal-dark: #1b1c23;
+$light-dark: #212936;
+$sent-color: #e9e9eb;
+$recv-color: #65a290;
+
+
+
+
+@font-face {
+    font-family: Roboto;
+    src: url('../public/Roboto-Black.ttf');
+}
+
+@mixin prevent-selection {
+    //Prevent  Text Selection 
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    @content;
+}
+
+@mixin mobile {
+    @media screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+
+
+@mixin small {
+    @media screen and (max-width: 800px) {
+        @content;
+    }
+}
+
+@mixin midium {
+    @media screen and (max-width: 800px) {
+        @content;
+    }
+}
+
+@mixin big {
+    @media screen and (max-width: 1200px) {
+        @content;
+    }
+}
+
+
+
+
+
+#root {
+    background-color: #000000;
+}
+
+
+
+
+
+
+.chatpage {
+
+    font-family: Roboto;
+
+    overflow: hidden;
+
+
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    background-color: rgb(17, 16, 22);
+    // border: 2px solid white;
+    // border-radius: 20px;
+    
+
+    .container {
+        width: 100%;
+        display: flex;
+
+        height: 100vh;
+
+        // width: 100vw;
+        .navbar {
+            @include prevent-selection() {}
+
+            @include small {
+                display: none;
+            }
+
+            background-color: $NAV-dark;
+            flex: 1;
+
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    width: 3rem;
+                    height: 3rem;
+                }
+            }
+
+            &:hover {
+                background-color: rgb(30, 30, 30);
+            }
+        }
+
+
+        .sidebar {
+            @include prevent-selection() {}
+
+            @include mobile {
+                display: none;
+            }
+
+            color: white;
+            background-color: $dark-dark;
+            flex: 5;
+
+            .createroom {
+                height: 5vh;
+                padding: 5px;
+                // text-align: center;
+                // text-justify: center;
+
+                img {
+                    //height: 30px;
+                    width: 26px;
+                    padding: 2px;
+                    object-fit: cover;
+                    cursor: pointer;
+                    margin: auto;
+                    display: block;
+                    border: 2px solid transparent;
+                    border-radius: 10px;
+
+                    &:hover {
+                        //border: 2px solid white;
+                        border-color: rgb(57, 92, 5);
+                    }
+                }
+
+                &:hover {
+                    background-color: rgb(159, 249, 26);
+                }
+            }
+
+
+            .search {
+                // display: none;
+                height: 10vh;
+                border-bottom: 2px dashed gray;
+
+                .searchform {
+                    padding: 10px;
+                    border-bottom: 2px solid gray;
+
+                    input {
+                        background-color: transparent;
+                        width: 90%;
+                        height: 100%;
+                        border: none;
+                        color: white;
+                        // height: 100%;
+                        outline: none;
+
+                        &::placeholder {
+                            color: lightgray;
+                        }
+                    }
+                }
+            }
+
+
+            //overflow: hidden;
+            .rooms {
+                overflow-y: scroll;
+                height: 95vh;
+
+                .container {
+                    overflow-y: scroll;
+                    padding: 5px;
+                    display: flex;
+                    flex-direction: column;
+
+
+                    .room {
+                        margin: 10px;
+                        padding: 10px;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        border: 0 solid white;
+                        border-radius: 25px;
+                        background-color: $light-dark;
+                        color: white;
+                        cursor: pointer;
+
+                        @include small {
+                            width: 150px;
+                        }
+
+                        &:hover {
+                            background-color: lightgray; //TODO:
+                            color: black;
+                        }
+
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+
+                        .roominfo {
+                            overflow: hidden;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            max-width: 5rem;
+                            text-overflow: ellipsis;
+
+                            gap: 0%;
+                            padding: 0%;
+                            margin: 0%;
+
+                            span {
+                               
+                                // white-space: nowrap;
+                                // max-width: 2rem;
+                                text-overflow: clip;
+
+
+
+                                font-size: large;
+                                font-weight: 500;
+                                text-transform: capitalize;
+                            }
+
+                            p {
+                                overflow: hidden;
+                                white-space: nowrap;
+                                max-width: 20rem;
+                                text-overflow: ellipsis;
+                                font-size: small;
+                                color: lightgray;
+
+                                @include small {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+            }
+
+            .rooms::-webkit-scrollbar {
+                display: none;
+            }
+
+        }
+
+        .chat {
+            background-color: $light-dark;
+            flex: 10;
+
+            .chatbar {
+                @include prevent-selection() {}
+
+                height: 8vh;
+                background-color: $dark-dark;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px;
+                color: lightgray;
+
+                .roominfo {
+                    overflow: hidden;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    max-width: 15rem;
+                    text-overflow: ellipsis;
+                    display: flex;
+                    // justify-content: center;
+                    align-items: center;
+
+                    img {
+                        width: 50px;
+                        border-radius: 50%;
+
+                        @include small {
+                            display: none;
+                        }
+                    }
+
+                    img.invitegame {
+                        width: 40px;
+                        
+                        border-radius: 10%;
+                        border: 2px solid transparent;
+                        @include small {
+                            display: none;
+                        }
+                        &:hover{
+                            border-color: rgba(255, 255, 255, 0.351);
+                        }
+                    }
+
+                    span {
+
+                        text-transform: uppercase;
+                        color: greenyellow;
+                        padding: 10px;
+                        font-size: larger;
+                        font-weight: 900;
+                    }
+
+                    div {
+                        background-color: rgb(255, 34, 34);
+                        border-radius: 50%;
+                        width: 10px;
+                        height: 10px;
+                    }
+
+                    div.online {
+                        background-color: green;
+                    }
+
+                }
+
+                .roomactions {
+                    @include mobile() {
+                        display: none;
+                    }
+
+                    display: flex;
+                    gap: 10px;
+
+                    //gap: 10px;
+                    img {
+                        justify-content: space-between;
+                        border: 2px solid transparent;
+                        border-radius: 10px;
+                        padding: 5px;
+                        width: 30px;
+
+                        &:hover {
+                            // border: 2px solid white;
+                            border-color: white;
+                            cursor: pointer;
+
+                        }
+                    }
+
+                }
+
+                box-shadow: 0px 50px blue; //, 10px 10px red, 15px 15px green;
+            }
+
+            .messages {
+                // background-color: #000000;
+                background-image: url('https://www.pngmart.com/files/13/Elegant-Pattern-PNG-Picture.png');
+                background-image: url('https://www.pngmart.com/files/13/Elegant-Pattern-Transparent-Background.png');
+                background-image: url('https://www.pngmart.com/files/13/Pattern-PNG-Transparent-Image.png');
+                background-size: cover;
+                height: 85vh;
+                padding: 10px;
+                overflow: scroll;
+                background-color: $normal-dark;
+
+                .message {
+                    display: flex;
+                    gap: 20px;
+                    margin-bottom: 20px;
+
+                    .messageinfo {
+                        @include prevent-selection() {}
+
+                        color: lightgray;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        font-size: smaller;
+
+                        img {
+                            margin: .3rem;
+                            width: 2rem;
+                            height: 2rem;
+                            border-radius: 50%;
+                            object-fit: cover;
+
+                            @include small {
+                                //display: none;;
+                                width: 1rem;
+                                height: 1rem;
+                                ;
+                            }
+                        }
+                    }
+
+                    .messagecontent {
+                        word-break: break-all;
+                        padding: 10px 20px;
+                        color: black;
+                        max-width: 40%;
+                        font-size: small;
+                        background-color: lightblue;
+                        border-radius: 0px 10px 10px 10px;
+                        gap: 10px;
+                    }
+
+                    &.owner {
+                        flex-direction: row-reverse;
+
+                        .messagecontent {
+                            background-color: greenyellow;
+                            border-radius: 10px 0px 10px 10px;
+                        }
+                    }
+                }
+            }
+
+            .messages::-webkit-scrollbar {
+                display: none;
+            }
+
+            .input {
+                height: 8vh;
+                background-color: rgb(60, 80, 28);
+                padding: 10px;
+
+                input {
+                    color: greenyellow;
+                    width: 100%;
+                    height: 60%;
+                    font-size: medium;
+                    font-weight: 500;
+                    background-color: rgb(60, 80, 28);
+                    outline: none;
+                    border: none;
+
+                    &::placeholder {
+                        color: lightgray;
+                    }
+                }
+            }
+        }
+    }
+
+    .PopUp {
+
+        @include prevent-selection() {}
+
+        @include mobile() {
+            display: none;
+        }
+
+        .container {
+            position: absolute;
+            left: 25%;
+            top: 30%;
+            height: 50%;
+            width: 50%;
+            border-radius: 1em;
+            background-color: $normal-dark;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            gap: 30px;
+            color: greenyellow;
+            z-index: 12;
+
+            h1 {
+                padding: 1rem;
+                text-align: center;
+                text-justify: center;
+            }
+
+            input {
+                text-align: center;
+                text-justify: center;
+                color: greenyellow;
+                background-color: transparent;
+                height: 3rem;
+                font-size: 1.7rem;
+                border: none;
+                border-bottom: 2px solid rgb(116, 154, 61);
+                outline: none;
+
+                &::placeholder {
+                    color: rgb(82, 102, 51);
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .access {
+                height: 1rem;
+                display: flex;
+                gap: 1rem;
+                justify-content: space-around;
+
+                .selection {
+                    display: flex;
+                    flex-direction: column;
+
+                    p {
+
+                        padding: 10px;
+                    }
+                }
+            }
+
+            .password {
+                input {
+                    animation: scalePopUp .25s ease-in;
+                }
+            }
+
+            button {
+                font-size: 1em;
+                font-weight: bolder;
+                height: 2rem;
+                width: 6rem;
+                background-color: greenyellow;
+                border: none;
+
+                &:hover {
+                    color: greenyellow;
+                    background-color: rgb(50, 81, 4);
+                    cursor: pointer;
+                }
+            }
+
+            animation: scalePopUp .25s ease-in;
+
+            @keyframes scalePopUp {
+                0% {
+                    transform: scale(.7);
+                }
+
+                50% {
+                    transform: scale(1.1);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+        }
+
+        .overlay {
+            height: 100vh;
+            width: 100vw;
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 10;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+        }
+    }
+}
